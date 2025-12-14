@@ -2,14 +2,20 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IntroSequence } from './IntroSequence';
 import { MainMenu } from './MainMenu';
+import { Desktop } from '../../components/os/Desktop';
+import { DialogBox } from '../../components/narrative/DialogBox';
+import { chapter1Script } from '../../components/narrative/Chapter1Script';
+import { useSystemStore } from '../../os/SystemState';
 import type { MenuButton } from '@/types/game';
 
-type WelcomeState = 'intro' | 'menu' | 'fadeOut';
+type WelcomeState = 'intro' | 'menu' | 'narrative' | 'game';
 
 export const WelcomePage = () => {
   const [state, setState] = useState<WelcomeState>('intro');
   const [hasExistingSave, setHasExistingSave] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
+
+  const { startGame } = useSystemStore();
 
   // 检查是否有本地存档
   useEffect(() => {
@@ -39,13 +45,19 @@ export const WelcomePage = () => {
     setState('menu');
   };
 
+  const handleNarrativeComplete = () => {
+    // Narrative finished, enter Game
+    startGame();
+    setState('game');
+  };
+
   const handleMenuClick = (button: MenuButton) => {
     console.log('Menu button clicked:', button);
 
     switch (button) {
       case 'start':
-        // TODO: 开始新游戏
-        alert('开始新游戏功能开发中...');
+        // Start Game: Go to Narrative first
+        setState('narrative');
         break;
 
       case 'continue':
@@ -89,6 +101,7 @@ export const WelcomePage = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
+            className="absolute inset-0 z-50"
           >
             <IntroSequence
               onComplete={handleIntroComplete}
@@ -104,11 +117,46 @@ export const WelcomePage = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
+            className="absolute inset-0 z-40"
           >
             <MainMenu
               hasExistingSave={hasExistingSave}
               onMenuClick={handleMenuClick}
             />
+          </motion.div>
+        )}
+
+        {state === 'narrative' && (
+          <motion.div
+            key="narrative"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 z-40 bg-black"
+          >
+            {/* Background or visual for narrative */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-30">
+              {/* Placeholder visual */}
+              <span className="text-white font-serif italic text-2xl">...</span>
+            </div>
+
+            <DialogBox
+              lines={chapter1Script}
+              onComplete={handleNarrativeComplete}
+            />
+          </motion.div>
+        )}
+
+        {state === 'game' && (
+          <motion.div
+            key="game"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2 }} // Slow fade in for boot effect
+            className="absolute inset-0 z-30"
+          >
+            <Desktop />
           </motion.div>
         )}
       </AnimatePresence>

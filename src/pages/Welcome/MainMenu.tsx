@@ -11,145 +11,155 @@ export const MainMenu = ({ hasExistingSave, onMenuClick }: MainMenuProps) => {
   const [hoveredButton, setHoveredButton] = useState<MenuButton | null>(null);
 
   const menuButtons: { id: MenuButton; label: string; disabled?: boolean }[] = [
-    { id: 'start', label: '开始游戏' },
+    { id: 'start', label: '开始游戏', disabled: false },
     { id: 'continue', label: '继续游戏', disabled: !hasExistingSave },
-    { id: 'chapters', label: '章节选择', disabled: true }, // 初始锁定
-    { id: 'achievements', label: '成就', disabled: false },
-    { id: 'settings', label: '设置' },
+    { id: 'chapters', label: '章节选择', disabled: true },
+    { id: 'achievements', label: '成就记录', disabled: false },
+    { id: 'settings', label: '系统设置', disabled: false },
   ];
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
-      {/* 背景图片 - 响应式切换PC/移动端 */}
+    <div className="fixed inset-0 flex items-center justify-end md:pr-32 font-serif overflow-hidden">
+      {/* Background - Original Images */}
       <div className="absolute inset-0">
-        {/* 移动端背景 (竖屏) */}
-        <div
-          className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: 'url(/assets/images/bg-welcome-mobile.jpg)',
-          }}
+        {/* Mobile Background */}
+        <div className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url(/assets/images/bg-welcome-mobile.jpg)' }}
         />
-        {/* PC端背景 (横屏) */}
-        <div
-          className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: 'url(/assets/images/bg-welcome-desktop.jpg)',
-          }}
+        {/* Desktop Background */}
+        <div className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat transform hover:scale-105 transition-transform duration-[30s]"
+          style={{ backgroundImage: 'url(/assets/images/bg-welcome-desktop.jpg)' }}
         />
-        {/* 降级背景渐变（图片未加载时显示） */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-blue-900 to-black -z-10" />
-        {/* 半透明遮罩层，确保文字可读 */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Light Overlay for readability */}
+        <div className="absolute inset-0 bg-white/10 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-gradient-to-l from-[#f5f5f0e6] via-[#f5f5f0b3] to-transparent" />
       </div>
 
-      {/* 动态粒子背景 */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 50 }).map((_, i) => (
+      {/* Floating Particles (Dust Motes) */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 20 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
+            className="absolute bg-amber-500/20 rounded-full blur-[1px]"
+            style={{
+              width: Math.random() * 6 + 2 + 'px',
+              height: Math.random() * 6 + 2 + 'px',
+            }}
             initial={{
               x: Math.random() * window.innerWidth,
               y: Math.random() * window.innerHeight,
+              opacity: 0,
             }}
             animate={{
-              y: [null, Math.random() * window.innerHeight],
-              opacity: [0, 1, 0],
+              y: [null, Math.random() * -50],
+              x: [null, Math.random() * 20 - 10],
+              opacity: [0, 0.6, 0],
             }}
             transition={{
-              duration: Math.random() * 10 + 5,
+              duration: Math.random() * 8 + 8,
               repeat: Infinity,
-              ease: 'linear',
+              ease: 'easeInOut',
+              delay: Math.random() * 5,
             }}
           />
         ))}
       </div>
 
-      {/* 主内容 */}
-      <div className="relative z-10 w-full max-w-md px-6">
-        {/* Logo */}
+      {/* Content Layout */}
+      <div className="relative z-10 w-full md:w-[480px] h-full flex flex-col justify-center px-8 md:px-0">
+
+        {/* Title Section */}
         <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.2, delay: 0.3 }}
+          className="mb-16 text-right md:text-left"
         >
-          <h1 className="text-6xl md:text-7xl font-bold text-white mb-4 tracking-wider text-glow">
-            构造层
-          </h1>
-          <p className="text-blue-300 text-sm md:text-base tracking-widest">
-            CONSTRUCT LAYER
-          </p>
-          <div className="mt-4 text-white/40 text-xs">
-            在这里，存在即是问题
+          <div className="inline-block relative">
+            <h1 className="font-calligraphy text-7xl md:text-8xl text-gray-800 mb-2 tracking-widest drop-shadow-sm">
+              构造层
+            </h1>
+            <p className="text-amber-700/60 text-sm md:text-base tracking-[0.4em] font-sans font-bold uppercase mt-2 text-right">
+              CONSTRUCT LAYER
+            </p>
+            <motion.div
+              animate={{ width: ['0%', '100%'] }}
+              transition={{ duration: 1.5, delay: 0.8 }}
+              className="h-[2px] bg-amber-800/20 mt-6 ml-auto"
+            />
           </div>
         </motion.div>
 
-        {/* 菜单按钮 */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="space-y-4"
-        >
+        {/* Menu Buttons */}
+        <div className="space-y-3 relative">
+          {/* Frosted Glass Panel */}
+          <div className="absolute -inset-6 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 shadow-xl shadow-amber-900/5 -z-10" />
+
           {menuButtons.map((button, index) => (
             <motion.button
               key={button.id}
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
+              transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
               disabled={button.disabled}
               onClick={() => !button.disabled && onMenuClick(button.id)}
               onMouseEnter={() => setHoveredButton(button.id)}
               onMouseLeave={() => setHoveredButton(null)}
               className={`
-                w-full py-4 px-6 rounded-xl font-medium text-lg
-                transition-all duration-300 relative overflow-hidden
-                ${
-                  button.disabled
-                    ? 'bg-gray-800/30 text-gray-600 cursor-not-allowed'
-                    : 'bg-white/10 text-white hover:bg-white/20 active:scale-95'
+                group w-full flex items-center justify-between py-3 px-6 rounded-lg relative
+                transition-all duration-300
+                ${button.disabled
+                  ? 'text-gray-400 cursor-not-allowed bg-gray-100/50'
+                  : 'text-gray-700 hover:text-amber-900 hover:bg-white/80 hover:shadow-md'
                 }
-                ${hoveredButton === button.id && !button.disabled ? 'shadow-lg shadow-blue-500/50' : ''}
               `}
             >
-              {/* 按钮发光效果 */}
-              {hoveredButton === button.id && !button.disabled && (
+              <div className="flex items-center gap-3">
+                {/* Active Indicator */}
                 <motion.div
-                  layoutId="buttonGlow"
-                  className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl"
-                  transition={{ type: 'spring', duration: 0.6 }}
+                  initial={false}
+                  animate={{
+                    width: hoveredButton === button.id && !button.disabled ? 4 : 0,
+                    opacity: hoveredButton === button.id && !button.disabled ? 1 : 0
+                  }}
+                  className="h-4 bg-amber-600 rounded-full"
                 />
-              )}
-
-              <span className="relative z-10">{button.label}</span>
-
-              {/* 锁定图标 */}
-              {button.disabled && (
-                <span className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                  🔒
+                <span className={`text-lg md:text-xl font-bold tracking-widest transition-all duration-300`}>
+                  {button.label}
                 </span>
-              )}
+              </div>
+
+              {/* Arrow / Lock Icon */}
+              <div className="text-gray-400">
+                {button.disabled ? (
+                  <span className="text-sm">🔒</span>
+                ) : (
+                  <motion.span
+                    animate={{ x: hoveredButton === button.id ? 3 : 0, opacity: hoveredButton === button.id ? 1 : 0 }}
+                    className="text-amber-600"
+                  >
+                    ❧
+                  </motion.span>
+                )}
+              </div>
             </motion.button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* 底部信息 */}
+        {/* Footer */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2 }}
-          className="mt-12 text-center space-y-2"
+          className="mt-8 flex justify-between items-center text-xs text-gray-500 font-sans"
         >
+          <span>v1.0.0_ALPHA</span>
           <button
             onClick={() => onMenuClick('intro')}
-            className="text-white/40 hover:text-white/60 text-sm transition-colors"
+            className="hover:text-amber-700 transition-colors tracking-widest"
           >
-            重看引子
+            重看序幕
           </button>
-          <div className="text-white/30 text-xs">
-            v1.0.0 | 游玩进度: 0%
-          </div>
         </motion.div>
       </div>
     </div>
