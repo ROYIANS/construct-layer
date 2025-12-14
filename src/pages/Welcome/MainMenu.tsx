@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import type { MenuButton } from '@/types/game';
+import { GameIcons } from '@/components/ui/GameIcons';
 
 interface MainMenuProps {
   hasExistingSave: boolean;
@@ -90,60 +91,89 @@ export const MainMenu = ({ hasExistingSave, onMenuClick }: MainMenuProps) => {
           </div>
         </motion.div>
 
-        {/* Menu Buttons */}
-        <div className="space-y-3 relative">
-          {/* Frosted Glass Panel */}
-          <div className="absolute -inset-6 bg-white/60 backdrop-blur-sm rounded-xl border border-white/40 shadow-xl shadow-amber-900/5 -z-10" />
+        {/* Menu Buttons Container */}
+        <div className="space-y-2 relative">
+          {/* Subtle line decoration */}
+          <div className="absolute top-0 bottom-0 left-0 w-[1px] bg-gradient-to-b from-transparent via-amber-900/10 to-transparent -z-10" />
 
-          {menuButtons.map((button, index) => (
-            <motion.button
-              key={button.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
-              disabled={button.disabled}
-              onClick={() => !button.disabled && onMenuClick(button.id)}
-              onMouseEnter={() => setHoveredButton(button.id)}
-              onMouseLeave={() => setHoveredButton(null)}
-              className={`
-                group w-full flex items-center justify-between py-3 px-6 rounded-lg relative
-                transition-all duration-300
-                ${button.disabled
-                  ? 'text-gray-400 cursor-not-allowed bg-gray-100/50'
-                  : 'text-gray-700 hover:text-amber-900 hover:bg-white/80 hover:shadow-md'
-                }
-              `}
-            >
-              <div className="flex items-center gap-3">
-                {/* Active Indicator */}
-                <motion.div
-                  initial={false}
-                  animate={{
-                    width: hoveredButton === button.id && !button.disabled ? 4 : 0,
-                    opacity: hoveredButton === button.id && !button.disabled ? 1 : 0
-                  }}
-                  className="h-4 bg-amber-600 rounded-full"
-                />
-                <span className={`text-lg md:text-xl font-bold tracking-widest transition-all duration-300`}>
-                  {button.label}
-                </span>
-              </div>
+          {menuButtons.map((button, index) => {
+            // Select appropriate icon
+            let IconComponent = GameIcons.Play;
+            if (button.id === 'continue') IconComponent = GameIcons.Continue;
+            if (button.id === 'chapters') IconComponent = GameIcons.Book;
+            if (button.id === 'achievements') IconComponent = GameIcons.Trophy;
+            if (button.id === 'settings') IconComponent = GameIcons.Settings;
 
-              {/* Arrow / Lock Icon */}
-              <div className="text-gray-400">
-                {button.disabled ? (
-                  <span className="text-sm">🔒</span>
-                ) : (
-                  <motion.span
-                    animate={{ x: hoveredButton === button.id ? 3 : 0, opacity: hoveredButton === button.id ? 1 : 0 }}
-                    className="text-amber-600"
-                  >
-                    ❧
-                  </motion.span>
+            return (
+              <motion.button
+                key={button.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                disabled={button.disabled}
+                onClick={() => !button.disabled && onMenuClick(button.id)}
+                onMouseEnter={() => setHoveredButton(button.id)}
+                onMouseLeave={() => setHoveredButton(null)}
+                className={`
+                  group relative w-full flex items-center justify-between py-4 px-8 rounded-sm
+                  transition-all duration-300
+                  ${button.disabled
+                    ? 'opacity-50 cursor-not-allowed'
+                    : 'hover:bg-amber-500/5 cursor-pointer'
+                  }
+                `}
+              >
+                {/* Hover Background Line Effect */}
+                {hoveredButton === button.id && !button.disabled && (
+                  <motion.div
+                    layoutId="hoverLine"
+                    className="absolute bottom-0 left-8 right-8 h-[1px] bg-amber-800/20"
+                    initial={{ opacity: 0, scaleX: 0 }}
+                    animate={{ opacity: 1, scaleX: 1 }}
+                    exit={{ opacity: 0, scaleX: 0 }}
+                  />
                 )}
-              </div>
-            </motion.button>
-          ))}
+
+                <div className="flex items-center gap-4">
+                  {/* Icon */}
+                  <div className={`
+                    transition-colors duration-300
+                    ${hoveredButton === button.id && !button.disabled ? 'text-amber-700' : 'text-amber-900/40'}
+                    ${button.disabled ? 'text-gray-300' : ''}
+                  `}>
+                    <IconComponent size={20} />
+                  </div>
+
+                  {/* Label */}
+                  <span className={`
+                    text-lg md:text-xl font-serif tracking-widest transition-colors duration-300
+                    ${hoveredButton === button.id && !button.disabled ? 'text-amber-900 font-bold' : 'text-gray-600'}
+                    ${button.disabled ? 'text-gray-300' : ''}
+                  `}>
+                    {button.label}
+                  </span>
+                </div>
+
+                {/* Right Indicator/Lock */}
+                <div className="text-gray-400">
+                  {button.disabled ? (
+                    <GameIcons.Lock size={16} className="text-gray-300" />
+                  ) : (
+                    <motion.div
+                      animate={{
+                        x: hoveredButton === button.id ? 5 : 0,
+                        opacity: hoveredButton === button.id ? 1 : 0
+                      }}
+                      className="text-amber-600"
+                    >
+                      <GameIcons.ArrowRightDecorative size={20} />
+                    </motion.div>
+                  )}
+                </div>
+              </motion.button>
+            );
+          })}
         </div>
 
         {/* Footer */}

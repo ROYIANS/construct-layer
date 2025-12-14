@@ -523,5 +523,3 @@ export const chapter1Files: VirtualFile[] = [
   ...workFiles,
   ...lifeFiles,
 ];
-
-export { wechatMessages, browserHistory };
