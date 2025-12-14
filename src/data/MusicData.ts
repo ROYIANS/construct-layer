@@ -12,30 +12,12 @@ export interface Song {
 export const musicLibrary: Song[] = [
     {
         id: '1',
-        title: '示例歌曲 1',
+        title: 'BGM',
         artist: 'Suno AI',
         album: 'Demo Album',
         duration: 180,
         cover: 'https://picsum.photos/seed/music1/400/400',
-        file: '/music/song1.mp3'
-    },
-    {
-        id: '2',
-        title: '示例歌曲 2',
-        artist: 'Suno AI',
-        album: 'Demo Album',
-        duration: 200,
-        cover: 'https://picsum.photos/seed/music2/400/400',
-        file: '/music/song2.mp3'
-    },
-    {
-        id: '3',
-        title: '示例歌曲 3',
-        artist: 'Suno AI',
-        album: 'Demo Album',
-        duration: 210,
-        cover: 'https://picsum.photos/seed/music3/400/400',
-        file: '/music/song3.mp3'
+        file: '/music/bgm.mp3'
     }
 ];
 
