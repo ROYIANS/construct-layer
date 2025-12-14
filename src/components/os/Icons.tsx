@@ -32,11 +32,53 @@ export const Icons = {
     ),
     Chrome: ({ className }: { className?: string }) => (
         <svg viewBox="0 0 48 48" className={className} fill="none">
-            <circle cx="24" cy="24" r="20" fill="#ffffff" stroke="none" />
-            <circle cx="24" cy="24" r="8" fill="#3b82f6" />
-            <path d="M24 4C12.95 4 4 12.95 4 24h20V4z" fill="#ef4444" />
-            <path d="M4 24c0 11.05 8.95 20 20 20v-9.17L13.17 24H4z" fill="#22c55e" />
-            <path d="M24 44c11.05 0 20-8.95 20-20h-9.17l-5.83 10.83L24 44z" fill="#eab308" />
+            {/* Outer circle shadow */}
+            <circle cx="24" cy="24" r="22" fill="url(#chrome-shadow)" />
+
+            {/* Main circle */}
+            <circle cx="24" cy="24" r="20" fill="white" />
+
+            {/* Red section */}
+            <path d="M24 4 C33.941 4 42 12.059 42 22 L24 22 Z" fill="#EA4335" />
+
+            {/* Yellow section */}
+            <path d="M42 22 C42 31.941 33.941 40 24 40 L24 22 Z" fill="#FBBC04" />
+
+            {/* Green section */}
+            <path d="M24 40 C14.059 40 6 31.941 6 22 L24 22 Z" fill="#34A853" />
+
+            {/* Center blue circle */}
+            <circle cx="24" cy="24" r="10" fill="#4285F4" />
+
+            {/* Inner white circle */}
+            <circle cx="24" cy="24" r="7" fill="white" />
+
+            <defs>
+                <radialGradient id="chrome-shadow">
+                    <stop offset="0%" stopColor="#333" stopOpacity="0.1" />
+                    <stop offset="100%" stopColor="#333" stopOpacity="0" />
+                </radialGradient>
+            </defs>
+        </svg>
+    ),
+    WeChat: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 48 48" className={className} fill="none">
+            {/* Background rounded square */}
+            <rect x="2" y="2" width="44" height="44" rx="8" fill="#07C160" />
+
+            {/* Left bubble (larger) */}
+            <ellipse cx="18" cy="20" rx="10" ry="9" fill="white" />
+
+            {/* Left bubble eyes */}
+            <circle cx="15" cy="19" r="1.5" fill="#07C160" />
+            <circle cx="21" cy="19" r="1.5" fill="#07C160" />
+
+            {/* Right bubble (smaller, overlapping) */}
+            <ellipse cx="32" cy="28" rx="9" ry="8" fill="white" />
+
+            {/* Right bubble eyes */}
+            <circle cx="29" cy="27" r="1.3" fill="#07C160" />
+            <circle cx="35" cy="27" r="1.3" fill="#07C160" />
         </svg>
     ),
     Start: ({ className }: { className?: string }) => (
@@ -74,6 +116,54 @@ export const Icons = {
         <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
             <line x1="12" y1="2" x2="12" y2="12" />
+        </svg>
+    ),
+    VSCode: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 48 48" className={className} fill="none">
+            {/* Main VS Code logo shape */}
+            <defs>
+                <linearGradient id="vscode-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#0078d4" />
+                    <stop offset="100%" stopColor="#005a9e" />
+                </linearGradient>
+            </defs>
+
+            {/* Background */}
+            <rect x="2" y="2" width="44" height="44" rx="2" fill="url(#vscode-gradient)" />
+
+            {/* VS Code X shape */}
+            <path d="M36 8 L36 40 L26 34 L12 40 L12 8 L26 14 Z" fill="#ffffff" opacity="0.95" />
+            <path d="M26 14 L12 22 L26 30 L26 14 Z" fill="#007acc" opacity="0.3" />
+        </svg>
+    ),
+    PDF: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 48 48" className={className} fill="none">
+            <path d="M14 11a3 3 0 0 1 3-3h14l9 9v20a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V11z" fill="#ff4d4f" stroke="none" />
+            <path d="M40 20H30V10" fill="#ff7875" fillOpacity="0.5" />
+            <path d="M12 16h24v24H12z" fill="#ffffff" fillOpacity="0.1" />
+            <text x="50%" y="65%" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">PDF</text>
+        </svg>
+    ),
+    Word: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 48 48" className={className} fill="none">
+            <rect x="6" y="6" width="36" height="36" rx="3" fill="#1890ff" />
+            <path d="M14 14h20v20H14z" fill="white" fillOpacity="0.2" />
+            <path d="M15 32l3-14h4l2 10 2-10h4l3 14h-4l-1-8-3 8h-3l-3-8-1 8h-3z" fill="white" />
+        </svg>
+    ),
+    Excel: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 48 48" className={className} fill="none">
+            <rect x="6" y="6" width="36" height="36" rx="3" fill="#52c41a" />
+            <path d="M14 14h20v20H14z" fill="white" fillOpacity="0.2" />
+            <path d="M30 15h-4v6h-6v4h6v6h4v-6h6v-4h-6v-6z" fill="white" transform="rotate(45 25 24)" />
+            <text x="50%" y="65%" textAnchor="middle" fontSize="14" fill="white" fontWeight="bold">X</text>
+        </svg>
+    ),
+    Image: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 48 48" className={className} fill="none">
+            <rect x="6" y="8" width="36" height="32" rx="2" fill="#9254de" />
+            <circle cx="18" cy="18" r="4" fill="#ffec3d" />
+            <path d="M42 34l-10-14-8 10-6-6-12 16h36z" fill="#722ed1" />
         </svg>
     )
 };

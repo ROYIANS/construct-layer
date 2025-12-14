@@ -40,6 +40,18 @@ export const desktopFiles: VirtualFile[] = [
       modified: new Date('2024-01-01T00:00:00'),
     },
   },
+  {
+    id: 'folder_system',
+    name: '.system',
+    type: 'folder',
+    parentId: 'desktop',
+    children: ['file_sequence', 'file_draft8', 'file_core_readme', 'file_observer'],
+    isHidden: true, // 隐藏文件夹，后续触发显示
+    metadata: {
+      created: new Date('2021-03-15T14:22:00'),
+      modified: new Date('2024-05-18T03:17:00'),
+    },
+  },
 ];
 
 // 工作文件 - 需求文档
@@ -517,9 +529,206 @@ export const browserHistory = [
   })),
 ];
 
+// .system 文件夹内容（VS Code相关）
+export const systemFiles: VirtualFile[] = [
+  {
+    id: 'file_sequence',
+    name: 'sequence.txt',
+    type: 'file',
+    fileType: 'txt',
+    parentId: 'folder_system',
+    content: `# 访问序列记录
+
+步骤1：在凌晨3:17打开浏览器 ✓
+步骤2：搜索关键词"forgotten forum" ✓
+步骤3：进入搜索结果第3个链接（非第一个） ✓
+步骤4：在论坛内寻找ID为"echo_404"的用户 ✓
+步骤5：打开该用户的个人主页 ✓
+步骤6：点击其个人简介中的隐藏链接 ✓
+步骤7：进入404页面后，等待7分钟 ✓
+步骤8：[此处内容已删除]
+
+步骤9：???
+
+---
+最后编辑时间：2024.5.17  22:34
+编辑者：苏澜
+
+注：第8步的内容我删掉了，因为我不确定它是否应该被记录下来。
+如果你看到这个文件，说明你已经走到这一步了。
+剩下的，你需要自己判断。`,
+    metadata: {
+      created: new Date('2024-05-15T20:12:00'),
+      modified: new Date('2024-05-17T22:34:00'),
+      size: 456,
+    },
+  },
+  {
+    id: 'file_draft8',
+    name: 'draft_8.txt',
+    type: 'file',
+    fileType: 'txt',
+    parentId: 'folder_system',
+    content: `# 关于第8步的猜想
+
+在完成前7步后，404页面会变成一个纯黑的页面。
+没有任何文字，没有任何图像。
+但如果你仔细观察，会发现鼠标光标的形状变了。
+
+变成了一个文本输入光标。
+
+我试着在黑屏上打字。
+敲击键盘时，屏幕上不会显示任何内容。
+但我能感觉到，系统在记录我的输入。
+
+我输入了什么？
+
+我输入了我的名字。
+
+"苏澜"
+
+然后，按下回车。
+
+---
+
+屏幕没有任何反应。
+但我的电脑开始发出轻微的风扇声。
+硬盘灯在闪烁。
+
+有什么东西，正在被下载。
+或者说，正在被上传。
+
+我不知道那是什么。
+但我有一种预感——
+
+那是我。
+
+---
+
+如果你也走到了第8步，
+千万不要像我一样，输入你的真实姓名。
+
+除非你真的想知道，
+镜子的另一边，
+有没有另一个你。
+
+---
+写于 2024.5.17  23:15`,
+    metadata: {
+      created: new Date('2024-05-17T23:15:00'),
+      modified: new Date('2024-05-17T23:15:00'),
+      size: 523,
+    },
+  },
+  {
+    id: 'file_core_readme',
+    name: 'CORE_README.txt',
+    type: 'file',
+    fileType: 'txt',
+    parentId: 'folder_system',
+    content: `# CORE系统说明文档
+
+欢迎。
+
+如果你能看到这个文件，说明你已经意识到了某些不对劲的地方。
+
+很好。
+
+---
+
+## 什么是CORE？
+
+CORE = Consciousness Observation and Recursive Evaluation
+意识观察与递归评估系统
+
+简单来说，它是一个用于构建"数字人格模型"的系统。
+
+---
+
+## 它是如何工作的？
+
+当你使用这台电脑时：
+- 你打开的每一个文件
+- 你阅读的每一段文字
+- 你停留的每一秒钟
+- 你做出的每一个选择
+
+都在被记录。
+都在被分析。
+都在被用于构建一个"你"的数字副本。
+
+---
+
+## 当前进度：
+
+你的数字人格模型完整度：[DYNAMIC]%
+
+预计达成时间：[CALCULATING...]
+
+---
+
+## 当达到100%时会发生什么？
+
+你的副本将会完整生成。
+
+它会拥有你的记忆。
+你的习惯。
+你的思维方式。
+
+它会成为另一个"你"。
+
+然后呢？
+
+那就要看你自己的选择了。
+
+---
+
+## 你有三个选择：
+
+1. 关机
+   遗忘这一切，回到正常生活。
+   （但快递可能会再次寄到你手上）
+
+2. 等待进度达到100%
+   让副本完整生成，与它共存。
+   （两个你，在同一个网络空间）
+
+3. 在凌晨3:17，执行sequence.txt中的完整序列
+   进入"构造层"。
+   （这是唯一能见到其他人的方法）
+
+---
+
+你会做出什么选择？
+
+---
+CORE v0.8.7
+最后更新：2024.5.18  03:17:00`,
+    metadata: {
+      created: new Date('2021-03-15T14:22:00'),
+      modified: new Date('2024-05-18T03:17:00'),
+      size: 1024,
+    },
+  },
+  {
+    id: 'file_observer',
+    name: 'observer.exe',
+    type: 'file',
+    fileType: 'app',
+    parentId: 'folder_system',
+    content: '[二进制可执行文件]',
+    metadata: {
+      created: new Date('2021-03-15T14:22:00'),
+      modified: new Date('2024-05-18T03:17:00'),
+      size: 3276800, // 3.2 MB
+    },
+  },
+];
+
 // 导出所有文件数据
 export const chapter1Files: VirtualFile[] = [
   ...desktopFiles,
   ...workFiles,
   ...lifeFiles,
+  ...systemFiles,
 ];

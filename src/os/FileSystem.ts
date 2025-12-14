@@ -29,6 +29,7 @@ interface FileSystemState {
     readFile: (fileId: string) => VirtualFile | undefined;
     showHiddenFiles: boolean;
     toggleHiddenFiles: () => void;
+    revealHiddenFile: (fileId: string) => void;
 }
 
 export const useFileSystem = create<FileSystemState>((set, get) => ({
@@ -57,5 +58,13 @@ export const useFileSystem = create<FileSystemState>((set, get) => ({
 
     toggleHiddenFiles: () => {
         set((state) => ({ showHiddenFiles: !state.showHiddenFiles }));
+    },
+
+    revealHiddenFile: (fileId) => {
+        set((state) => ({
+            files: state.files.map(f =>
+                f.id === fileId ? { ...f, isHidden: false } : f
+            )
+        }));
     },
 }));

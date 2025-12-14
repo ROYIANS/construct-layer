@@ -21,6 +21,12 @@ export const FileExplorer = ({ initialPath = 'desktop' }: FileExplorerProps) => 
             // Open file
             if (file.fileType === 'txt') {
                 openWindow('notepad', file.name, { fileId: file.id });
+            } else if (file.fileType === 'pdf') {
+                openWindow('pdf', file.name, { fileId: file.id });
+            } else if (['doc', 'docx', 'excel', 'xlsx'].includes(file.fileType || '')) {
+                openWindow('office', file.name, { fileId: file.id });
+            } else if (['png', 'jpg', 'jpeg', 'gif'].includes(file.fileType || '')) {
+                openWindow('image', file.name, { fileId: file.id });
             }
         }
     };
@@ -29,6 +35,24 @@ export const FileExplorer = ({ initialPath = 'desktop' }: FileExplorerProps) => 
         const currentFolder = readFile(currentPath);
         if (currentFolder && currentFolder.parentId) {
             setCurrentPath(currentFolder.parentId);
+        }
+    };
+
+    const getFileIcon = (file: any) => {
+        if (file.type === 'folder') {
+            return <Icons.Folder className="w-full h-full filter drop-shadow-sm" />;
+        }
+        switch (file.fileType) {
+            case 'pdf': return <Icons.PDF className="w-full h-full filter drop-shadow-sm" />;
+            case 'doc':
+            case 'docx': return <Icons.Word className="w-full h-full filter drop-shadow-sm" />;
+            case 'excel':
+            case 'xlsx': return <Icons.Excel className="w-full h-full filter drop-shadow-sm" />;
+            case 'png':
+            case 'jpg':
+            case 'jpeg': return <Icons.Image className="w-full h-full filter drop-shadow-sm" />;
+            case 'app': return <Icons.Computer className="w-full h-full filter drop-shadow-sm" />;
+            default: return <Icons.FileText className="w-full h-full filter drop-shadow-sm text-gray-400" />;
         }
     };
 
@@ -64,11 +88,7 @@ export const FileExplorer = ({ initialPath = 'desktop' }: FileExplorerProps) => 
                             title={file.name}
                         >
                             <div className="w-12 h-12 flex items-center justify-center">
-                                {file.type === 'folder' ? (
-                                    <Icons.Folder className="w-full h-full filter drop-shadow-sm" />
-                                ) : (
-                                    <Icons.FileText className="w-full h-full filter drop-shadow-sm text-gray-100" />
-                                )}
+                                {getFileIcon(file)}
                             </div>
                             <span className="text-xs text-center break-all line-clamp-2 px-1 rounded group-hover:bg-blue-100/50">
                                 {file.name}

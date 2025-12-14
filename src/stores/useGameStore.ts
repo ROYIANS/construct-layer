@@ -13,6 +13,11 @@ interface GameStore extends GameState {
   updateOSState: (updates: Partial<GameState['osState']>) => void;
   setNarrativeIndex: (index: number) => void;
 
+  // CORE系统
+  coreProgress: number; // 0-100
+  updateCoreProgress: (delta: number) => void;
+  getCoreETA: () => string;
+
   // 存档相关
   saveGame: (saveType?: 'auto' | 'manual' | 'checkpoint', customName?: string) => Promise<void>;
   loadGame: (saveId: string) => Promise<void>;
@@ -43,6 +48,7 @@ const initialState: GameState = {
 
 export const useGameStore = create<GameStore>((set, get) => ({
   ...initialState,
+  coreProgress: 10, // 初始10%
 
   setFlag: (key, value) =>
     set((state) => ({
@@ -83,6 +89,27 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   setNarrativeIndex: (index) =>
     set({ narrativeIndex: index }),
+
+  // CORE系统方法
+  updateCoreProgress: (delta) =>
+    set((state) => ({
+      coreProgress: Math.min(100, Math.max(0, state.coreProgress + delta)),
+    })),
+
+  getCoreETA: () => {
+    const state = get();
+    const remaining = 100 - state.coreProgress;
+    const avgSpeed = 2; // 平均每分钟增长2%
+    const minutesRemaining = remaining / avgSpeed;
+
+    if (minutesRemaining < 60) {
+      return `约 ${Math.ceil(minutesRemaining)} 分钟`;
+    } else {
+      const hours = Math.floor(minutesRemaining / 60);
+      const mins = Math.ceil(minutesRemaining % 60);
+      return `约 ${hours} 小时 ${mins} 分钟`;
+    }
+  },
 
   // 获取当前完整状态
   getCurrentState: () => {

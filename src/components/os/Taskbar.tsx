@@ -6,7 +6,7 @@ import { Icons } from './Icons';
 
 export const Taskbar = () => {
     const { systemTime } = useSystemStore();
-    const { windows, activeWindowId, focusWindow, minimizeWindow } = useWindowStore();
+    const { windows, activeWindowId, focusWindow, minimizeWindow, openWindow } = useWindowStore();
     const [startMenuOpen, setStartMenuOpen] = useState(false);
 
     // Format time as HH:MM
@@ -41,8 +41,38 @@ export const Taskbar = () => {
                     <span className="text-xs text-white/50">Type here to search</span>
                 </div>
 
+                {/* Pinned Apps */}
+                <div className="flex items-center gap-1 ml-2 h-full">
+                    {/* File Explorer */}
+                    <button
+                        onClick={() => openWindow('explorer', '我的电脑', { path: 'desktop' })}
+                        className="h-full px-3 hover:bg-white/10 transition-colors flex items-center justify-center"
+                        title="文件资源管理器"
+                    >
+                        <Icons.Folder className="w-5 h-5" />
+                    </button>
+
+                    {/* WeChat */}
+                    <button
+                        onClick={() => openWindow('wechat', '微信')}
+                        className="h-full px-3 hover:bg-white/10 transition-colors flex items-center justify-center"
+                        title="微信"
+                    >
+                        <Icons.WeChat className="w-5 h-5" />
+                    </button>
+
+                    {/* Chrome */}
+                    <button
+                        onClick={() => openWindow('browser', 'Google Chrome')}
+                        className="h-full px-3 hover:bg-white/10 transition-colors flex items-center justify-center"
+                        title="Google Chrome"
+                    >
+                        <Icons.Chrome className="w-5 h-5" />
+                    </button>
+                </div>
+
                 {/* Running Apps - Scrollable on mobile */}
-                <div className="flex items-center gap-1 ml-2 h-full overflow-x-auto no-scrollbar max-w-[calc(100vw-150px)]">
+                <div className="flex items-center gap-1 ml-2 h-full overflow-x-auto no-scrollbar max-w-[calc(100vw-220px)] md:max-w-[calc(100vw-400px)]">
                     {windows.map((win) => (
                         <div
                             key={win.id}
