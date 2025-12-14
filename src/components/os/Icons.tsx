@@ -203,5 +203,89 @@ export const Icons = {
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
+    ),
+    Music: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 48 48" className={className} fill="none">
+            {/* 圆形背景 */}
+            <circle cx="24" cy="24" r="20" fill="#EF4444" />
+            {/* 音符 */}
+            <path d="M18 32c0 2.21 1.79 4 4 4s4-1.79 4-4V16l6-2v14c0 2.21 1.79 4 4 4s4-1.79 4-4V10l-14 4v18z" fill="white" />
+        </svg>
+    ),
+    Play: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+        </svg>
+    ),
+    Pause: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+        </svg>
+    ),
+    SkipBack: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+        </svg>
+    ),
+    SkipForward: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+        </svg>
+    ),
+    Repeat: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="17 1 21 5 17 9" />
+            <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+            <polyline points="7 23 3 19 7 15" />
+            <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+        </svg>
+    ),
+    Shuffle: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="16 3 21 3 21 8" />
+            <line x1="4" y1="20" x2="21" y2="3" />
+            <polyline points="21 16 21 21 16 21" />
+            <line x1="15" y1="15" x2="21" y2="21" />
+            <line x1="4" y1="4" x2="9" y2="9" />
+        </svg>
+    ),
+    Volume: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+        </svg>
+    ),
+    VolumeX: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <line x1="23" y1="9" x2="17" y2="15" />
+            <line x1="17" y1="9" x2="23" y2="15" />
+        </svg>
+    ),
+    ListMusic: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="8" y1="6" x2="21" y2="6" />
+            <line x1="8" y1="12" x2="21" y2="12" />
+            <line x1="8" y1="18" x2="21" y2="18" />
+            <line x1="3" y1="6" x2="3.01" y2="6" />
+            <line x1="3" y1="12" x2="3.01" y2="12" />
+            <line x1="3" y1="18" x2="3.01" y2="18" />
+        </svg>
+    ),
+    Disc: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10" />
+            <circle cx="12" cy="12" r="3" />
+        </svg>
+    ),
+    Heart: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+    ),
+    Lambda: ({ className }: { className?: string }) => (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="18 15 12 9 6 15" />
+        </svg>
     )
 };

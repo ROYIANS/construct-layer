@@ -1,6 +1,6 @@
 import { useFileSystem, VirtualFile } from '../../../os/FileSystem';
 import { useWindowStore } from '../../../os/WindowManager';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icons } from '../Icons';
 
 interface FileExplorerProps {
@@ -9,12 +9,23 @@ interface FileExplorerProps {
 
 export const FileExplorer = ({ initialPath = 'desktop' }: FileExplorerProps) => {
     const [currentPath, setCurrentPath] = useState(initialPath);
+    const [isMobile, setIsMobile] = useState(false);
     const { getFolderContents, readFile } = useFileSystem();
     const { openWindow } = useWindowStore();
 
+    // 检测移动设备
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     const files = getFolderContents(currentPath);
 
-    const handleDoubleClick = (file: VirtualFile) => {
+    const handleClick = (file: VirtualFile) => {
         if (file.type === 'folder') {
             setCurrentPath(file.id);
         } else {
@@ -64,28 +75,31 @@ export const FileExplorer = ({ initialPath = 'desktop' }: FileExplorerProps) => 
                 <button
                     onClick={navigateUp}
                     disabled={!readFile(currentPath)?.parentId}
-                    className="p-1 hover:bg-gray-200 rounded disabled:opacity-30 disabled:hover:bg-transparent"
+                    className={`hover:bg-gray-200 rounded disabled:opacity-30 disabled:hover:bg-transparent ${isMobile ? 'p-2' : 'p-1'}`}
                 >
                     <Icons.UpArrow className="w-5 h-5" />
                 </button>
                 <div className="flex-1 bg-white border px-2 py-1 text-sm rounded cursor-text flex items-center gap-2 border-gray-300">
                     <Icons.Folder className="w-4 h-4 text-gray-400" />
-                    {currentPath === 'desktop' ? 'Desktop' : readFile(currentPath)?.name}
+                    <span className="truncate">{currentPath === 'desktop' ? 'Desktop' : readFile(currentPath)?.name}</span>
                 </div>
-                <div className="bg-white border px-2 py-1 text-sm rounded w-48 border-gray-300 flex items-center gap-2">
-                    <Icons.Search className="w-3 h-3 text-gray-400" />
-                    <span className="text-gray-400">Search</span>
-                </div>
+                {!isMobile && (
+                    <div className="bg-white border px-2 py-1 text-sm rounded w-48 border-gray-300 flex items-center gap-2">
+                        <Icons.Search className="w-3 h-3 text-gray-400" />
+                        <span className="text-gray-400">Search</span>
+                    </div>
+                )}
             </div>
 
             {/* File List */}
             <div className="flex-1 overflow-auto p-4 content-start">
-                <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
+                <div className={`grid gap-2 ${isMobile ? 'grid-cols-3' : 'grid-cols-4 md:grid-cols-6'}`}>
                     {files.map(file => (
                         <div
                             key={file.id}
-                            onDoubleClick={() => handleDoubleClick(file)}
-                            className="flex flex-col items-center gap-1 p-2 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded cursor-default group"
+                            onClick={isMobile ? () => handleClick(file) : undefined}
+                            onDoubleClick={!isMobile ? () => handleClick(file) : undefined}
+                            className="flex flex-col items-center gap-1 p-2 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded cursor-pointer group"
                             title={file.name}
                         >
                             <div className="w-12 h-12 flex items-center justify-center">

@@ -1,0 +1,49 @@
+// 音乐数据配置
+export interface Song {
+    id: string;
+    title: string;
+    artist: string;
+    album: string;
+    duration: number; // 秒
+    cover?: string; // 封面图片路径
+    file: string; // 音频文件路径（相对于 public 目录）
+}
+
+export const musicLibrary: Song[] = [
+    {
+        id: '1',
+        title: '示例歌曲 1',
+        artist: 'Suno AI',
+        album: 'Demo Album',
+        duration: 180,
+        cover: 'https://picsum.photos/seed/music1/400/400',
+        file: '/music/song1.mp3'
+    },
+    {
+        id: '2',
+        title: '示例歌曲 2',
+        artist: 'Suno AI',
+        album: 'Demo Album',
+        duration: 200,
+        cover: 'https://picsum.photos/seed/music2/400/400',
+        file: '/music/song2.mp3'
+    },
+    {
+        id: '3',
+        title: '示例歌曲 3',
+        artist: 'Suno AI',
+        album: 'Demo Album',
+        duration: 210,
+        cover: 'https://picsum.photos/seed/music3/400/400',
+        file: '/music/song3.mp3'
+    }
+];
+
+// 使用说明：
+// 1. 将音乐文件放在 public/music/ 目录下
+// 2. 将封面图片放在 public/music/covers/ 目录下
+// 3. 更新上面的配置，修改文件路径、歌曲信息
+// 4. 如果没有封面图片，可以不设置 cover 字段，将使用默认封面
+// 5. 也可以使用 Picsum Photos 的占位图片（需要网络连接）：
+//    例如：'https://picsum.photos/seed/your-seed/400/400'
+//    seed 可以是任何字符串，相同的 seed 会生成相同的图片

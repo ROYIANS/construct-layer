@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSystemStore } from '../../os/SystemState';
 import { useWindowStore } from '../../os/WindowManager';
 import { Taskbar } from './Taskbar';
@@ -11,6 +11,7 @@ import { VSCode } from './apps/VSCode';
 import { PDFViewer } from './apps/PDFViewer';
 import { OfficeApp } from './apps/OfficeApp';
 import { ImageViewer } from './apps/ImageViewer';
+import { MusicApp } from './apps/MusicApp';
 import { NarrativeTriggerSystem } from '../narrative/NarrativeTriggerSystem';
 import { useFileSystem } from '../../os/FileSystem';
 import { Icons } from './Icons';
@@ -20,9 +21,20 @@ export const Desktop = () => {
     const { updateTime } = useSystemStore();
     const { windows, openWindow } = useWindowStore();
     const { getDesktopFiles } = useFileSystem();
+    const [isMobile, setIsMobile] = useState(false);
 
     // 启动CORE追踪系统
     useCORETracking();
+
+    // 检测是否为移动设备
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     // Time tick
     useEffect(() => {
@@ -32,7 +44,7 @@ export const Desktop = () => {
 
     const desktopFiles = getDesktopFiles();
 
-    const handleIconDoubleClick = (file: any) => {
+    const handleIconClick = (file: any) => {
         if (file.type === 'folder') {
             openWindow('explorer', file.name, { path: file.id });
         } else if (file.fileType === 'txt') {
@@ -64,6 +76,8 @@ export const Desktop = () => {
                 return <OfficeApp fileId={window.data?.fileId} />;
             case 'image':
                 return <ImageViewer fileId={window.data?.fileId} />;
+            case 'music':
+                return <MusicApp />;
             default:
                 return <div>Unknown App</div>;
         }
@@ -100,8 +114,9 @@ export const Desktop = () => {
                 {desktopFiles.map((file) => (
                     <div
                         key={file.id}
-                        onDoubleClick={() => handleIconDoubleClick(file)}
-                        className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-default transition-colors"
+                        onClick={isMobile ? () => handleIconClick(file) : undefined}
+                        onDoubleClick={!isMobile ? () => handleIconClick(file) : undefined}
+                        className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-pointer transition-colors"
                         title={file.name}
                     >
                         {/* Icon Selection logic */}
@@ -116,8 +131,9 @@ export const Desktop = () => {
 
                 {/* WeChat Icon */}
                 <div
-                    onDoubleClick={() => openWindow('wechat', '微信')}
-                    className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-default transition-colors"
+                    onClick={isMobile ? () => openWindow('wechat', '微信') : undefined}
+                    onDoubleClick={!isMobile ? () => openWindow('wechat', '微信') : undefined}
+                    className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-pointer transition-colors"
                 >
                     <div className="w-12 h-12 flex items-center justify-center filter drop-shadow-md">
                         <Icons.WeChat className="w-full h-full" />
@@ -127,8 +143,9 @@ export const Desktop = () => {
 
                 {/* Chrome Icon */}
                 <div
-                    onDoubleClick={() => openWindow('browser', 'Google Chrome')}
-                    className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-default transition-colors"
+                    onClick={isMobile ? () => openWindow('browser', 'Google Chrome') : undefined}
+                    onDoubleClick={!isMobile ? () => openWindow('browser', 'Google Chrome') : undefined}
+                    className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-pointer transition-colors"
                 >
                     <div className="w-12 h-12 flex items-center justify-center filter drop-shadow-md">
                         <Icons.Chrome className="w-full h-full" />
@@ -138,13 +155,26 @@ export const Desktop = () => {
 
                 {/* VS Code Icon */}
                 <div
-                    onDoubleClick={() => openWindow('vscode', 'Visual Studio Code', { path: 'folder_system' })}
-                    className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-default transition-colors"
+                    onClick={isMobile ? () => openWindow('vscode', 'Visual Studio Code', { path: 'folder_system' }) : undefined}
+                    onDoubleClick={!isMobile ? () => openWindow('vscode', 'Visual Studio Code', { path: 'folder_system' }) : undefined}
+                    className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-pointer transition-colors"
                 >
                     <div className="w-12 h-12 flex items-center justify-center filter drop-shadow-md">
                         <Icons.VSCode className="w-full h-full" />
                     </div>
                     <span className="text-white text-xs text-center drop-shadow-md">VS Code</span>
+                </div>
+
+                {/* Suno Music Icon */}
+                <div
+                    onClick={isMobile ? () => openWindow('music', 'Suno Music') : undefined}
+                    onDoubleClick={!isMobile ? () => openWindow('music', 'Suno Music') : undefined}
+                    className="w-20 group flex flex-col items-center gap-1 p-2 hover:bg-white/10 rounded border border-transparent hover:border-white/20 cursor-pointer transition-colors"
+                >
+                    <div className="w-12 h-12 flex items-center justify-center filter drop-shadow-md">
+                        <Icons.Music className="w-full h-full" />
+                    </div>
+                    <span className="text-white text-xs text-center drop-shadow-md">Suno Music</span>
                 </div>
             </div>
 
