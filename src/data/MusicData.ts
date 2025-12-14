@@ -11,13 +11,40 @@ export interface Song {
 
 export const musicLibrary: Song[] = [
     {
-        id: '1',
-        title: 'BGM',
+        id: '0',
+        title: 'Neverland',
         artist: 'Suno AI',
         album: 'Demo Album',
-        duration: 180,
-        cover: 'https://picsum.photos/seed/music1/400/400',
+        duration: 60,
+        cover: 'https://picsum.photos/seed/music0/400/400',
         file: '/music/bgm.mp3'
+    },
+    {
+        id: '1',
+        title: 'Inspiring Dreams',
+        artist: 'Suno AI',
+        album: 'Demo Album',
+        duration: 60,
+        cover: 'https://picsum.photos/seed/music1/400/400',
+        file: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+    },
+    {
+        id: '2',
+        title: 'Digital Waves',
+        artist: 'Suno AI',
+        album: 'Demo Album',
+        duration: 60,
+        cover: 'https://picsum.photos/seed/music2/400/400',
+        file: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
+    },
+    {
+        id: '3',
+        title: 'Electronic Journey',
+        artist: 'Suno AI',
+        album: 'Demo Album',
+        duration: 60,
+        cover: 'https://picsum.photos/seed/music3/400/400',
+        file: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
     }
 ];
 

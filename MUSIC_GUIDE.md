@@ -1,8 +1,12 @@
 # Suno Music 使用指南
 
-## 📁 文件结构
+## 🎵 当前配置
 
-将你的音乐文件放在以下目录结构中：
+**默认使用在线测试音频**，可以立即播放。如需使用本地音乐文件，请参考下方配置说明。
+
+## 📁 本地音乐文件结构
+
+如需使用本地音乐，将文件放在以下目录结构中：
 
 ```
 public/
@@ -16,9 +20,29 @@ public/
         └── cover3.jpg
 ```
 
+**注意**：目录已创建，直接添加音频文件即可。
+
 ## 🎵 配置音乐库
 
 编辑文件：`src/data/MusicData.ts`
+
+### 使用在线音频（当前配置）
+
+```typescript
+export const musicLibrary: Song[] = [
+    {
+        id: '1',
+        title: '你的歌曲名称',
+        artist: '艺术家名称',
+        album: '专辑名称',
+        duration: 180,
+        cover: 'https://picsum.photos/seed/music1/400/400',
+        file: 'https://example.com/music/song.mp3'  // 在线音频URL
+    }
+];
+```
+
+### 使用本地音频
 
 ```typescript
 export const musicLibrary: Song[] = [
@@ -28,8 +52,8 @@ export const musicLibrary: Song[] = [
         artist: '艺术家名称',          // 艺术家
         album: '专辑名称',             // 专辑
         duration: 180,                 // 时长（秒）
-        cover: '/music/covers/cover1.jpg',  // 封面图片路径（可选）
-        file: '/music/song1.mp3'       // 音频文件路径
+        cover: '/music/covers/cover1.jpg',  // 本地封面图片路径
+        file: '/music/song1.mp3'       // 本地音频文件路径
     },
     // 添加更多歌曲...
 ];
