@@ -6,6 +6,8 @@ import { Desktop } from '../../components/os/Desktop';
 import { DialogBox } from '../../components/narrative/DialogBox';
 import { chapter1Script } from '../../components/narrative/Chapter1Script';
 import { useSystemStore } from '../../os/SystemState';
+import { useGameStore } from '../../stores/useGameStore';
+import { saveManager } from '../../systems/SaveManager';
 import type { MenuButton } from '@/types/game';
 
 type WelcomeState = 'intro' | 'menu' | 'narrative' | 'game';
@@ -16,12 +18,12 @@ export const WelcomePage = () => {
   const [showIntro, setShowIntro] = useState(true);
 
   const { startGame } = useSystemStore();
+  const { loadGame, saveGame, createCheckpoint } = useGameStore();
 
   // 检查是否有本地存档
   useEffect(() => {
-    const checkSave = () => {
-      // TODO: 从IndexedDB检查存档
-      const hasSave = localStorage.getItem('construct_layer_save') !== null;
+    const checkSave = async () => {
+      const hasSave = await saveManager.hasSaves();
       setHasExistingSave(hasSave);
     };
 
@@ -45,24 +47,47 @@ export const WelcomePage = () => {
     setState('menu');
   };
 
-  const handleNarrativeComplete = () => {
+  const handleNarrativeComplete = async () => {
+    // 对话完成，创建检查点
+    await createCheckpoint('第一章开始');
+
     // Narrative finished, enter Game
     startGame();
     setState('game');
   };
 
-  const handleMenuClick = (button: MenuButton) => {
+  const handleMenuClick = async (button: MenuButton) => {
     console.log('Menu button clicked:', button);
 
     switch (button) {
       case 'start':
+        // 开始游戏：创建新的检查点
+        await createCheckpoint('游戏开始');
         // Start Game: Go to Narrative first
         setState('narrative');
         break;
 
       case 'continue':
-        // TODO: 继续游戏
-        alert('继续游戏功能开发中...');
+        try {
+          // 加载最新存档
+          const latestSave = await saveManager.getLatestSave();
+          if (latestSave) {
+            await loadGame(latestSave.id);
+            // 根据存档状态决定进入哪个场景
+            if (latestSave.sceneId === 'welcome' || latestSave.sceneId === 'narrative') {
+              setState('narrative');
+            } else {
+              setState('game');
+              startGame();
+            }
+            console.log('[WelcomePage] Loaded save:', latestSave.name);
+          } else {
+            alert('未找到存档');
+          }
+        } catch (error) {
+          console.error('[WelcomePage] Failed to load save:', error);
+          alert('读取存档失败');
+        }
         break;
 
       case 'chapters':
