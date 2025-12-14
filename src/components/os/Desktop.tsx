@@ -17,7 +17,7 @@ import { Icons } from './Icons';
 import { useCORETracking } from '@/hooks/useCORETracking';
 
 export const Desktop = () => {
-    const { systemTime, updateTime } = useSystemStore();
+    const { updateTime } = useSystemStore();
     const { windows, openWindow } = useWindowStore();
     const { getDesktopFiles } = useFileSystem();
 
@@ -49,7 +49,7 @@ export const Desktop = () => {
     const renderApp = (window: any) => {
         switch (window.appId) {
             case 'explorer':
-                return <FileExplorer initialPath={window.data?.path} />;
+                return <FileExplorer />;
             case 'notepad':
                 return <Notepad fileId={window.data?.fileId} />;
             case 'wechat':
@@ -57,7 +57,7 @@ export const Desktop = () => {
             case 'browser':
                 return <ChromeApp />;
             case 'vscode':
-                return <VSCode initialPath={window.data?.path} />;
+                return <VSCode />;
             case 'pdf':
                 return <PDFViewer fileId={window.data?.fileId} />;
             case 'office':

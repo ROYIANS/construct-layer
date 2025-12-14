@@ -23,7 +23,7 @@ export const WelcomePage = () => {
   const [showIntro, setShowIntro] = useState(true);
 
   const { startGame } = useSystemStore();
-  const { loadGame, saveGame, createCheckpoint } = useGameStore();
+  const { loadGame, createCheckpoint } = useGameStore();
 
   // 检查是否有本地存档
   useEffect(() => {
@@ -112,13 +112,9 @@ export const WelcomePage = () => {
       if (save) {
         await loadGame(saveId);
         // 根据存档状态决定进入哪个场景
-        if (save.sceneId === 'welcome' || save.sceneId === 'narrative') {
-          setState('narrative');
-        } else {
-          setState('game');
-          startGame();
-        }
-        console.log('[WelcomePage] Loaded save:', save.name);
+        setState('game');
+        startGame();
+        console.log('[WelcomePage] Loaded save:', saveId);
       }
     } catch (error) {
       console.error('[WelcomePage] Failed to load save:', error);

@@ -283,7 +283,7 @@ export class SaveManager {
     /**
      * 生成存档名称
      */
-    private generateSaveName(gameState: GameState, saveType: string): string {
+    private generateSaveName(_gameState: GameState, saveType: string): string {
         const time = new Date().toLocaleString('zh-CN', {
             month: '2-digit',
             day: '2-digit',

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { wechatMessages } from '@/data/Chapter1Files';
 import { useGameStore } from '@/stores/useGameStore';
-import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Assets / Icons ---
 const WeChatIcons = {

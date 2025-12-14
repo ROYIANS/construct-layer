@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useGameStore } from '@/stores/useGameStore';
-import { useFileSystem } from '@/os/FileSystem';
 
 /**
  * CORE系统追踪Hook
@@ -10,7 +9,7 @@ export const useCORETracking = () => {
     const { updateCoreProgress, readFiles, flags, coreProgress } = useGameStore();
     const lastReadFilesCount = useRef(0);
     const lastFlagsCount = useRef(0);
-    const fileViewTimeouts = useRef<Map<string, NodeJS.Timeout>>(new Map());
+    const fileViewTimeouts = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
 
     // 追踪文件打开
     useEffect(() => {

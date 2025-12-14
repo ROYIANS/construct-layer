@@ -1,6 +1,6 @@
 import { motion, useDragControls } from 'framer-motion';
 import { useWindowStore, WindowInstance } from '../../os/WindowManager';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Icons } from './Icons';
 
 interface WindowFrameProps {

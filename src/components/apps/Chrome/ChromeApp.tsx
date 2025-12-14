@@ -8,14 +8,14 @@ import { Icons } from '../../os/Icons';
 export const ChromeApp = () => {
     const [url, setUrl] = useState('https://google.com');
     const [inputValue, setInputValue] = useState('https://google.com');
-    const [history, setHistory] = useState<any[]>(browserHistory);
+    const [history] = useState<any[]>(browserHistory);
     const [activeTab, setActiveTab] = useState('home'); // home, history, error, page
     const [showMenu, setShowMenu] = useState(false);
     const [showDevTools, setShowDevTools] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
     // Game state tracking
-    const { setFlag, addDiscoveredClue, flags } = useGameStore();
+    const { setFlag, flags } = useGameStore();
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {

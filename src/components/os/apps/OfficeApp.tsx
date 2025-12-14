@@ -18,8 +18,7 @@ export const OfficeApp = ({ fileId }: OfficeAppProps) => {
         );
     }
 
-    const isExcel = file.fileType === 'excel' || file.fileType === 'xlsx';
-    const isWord = file.fileType === 'docx' || file.fileType === 'doc';
+    const isExcel = file.fileType === 'excel';
     const themeColor = isExcel ? '#1d6f42' : '#2b579a'; // Excel Green vs Word Blue
 
     return (

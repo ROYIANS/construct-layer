@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 export interface DialogLine {
     id: string;
@@ -44,8 +44,8 @@ export const DialogBox = ({ lines, onComplete, onLineChange }: DialogBoxProps) =
     const [isTyping, setIsTyping] = useState(false);
     const [canProceed, setCanProceed] = useState(false); // 新增：控制是否可以点击继续
 
-    const typeIntervalRef = useRef<NodeJS.Timeout | null>(null);
-    const autoContinueTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const typeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const autoContinueTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const playTypingSound = useRef<(() => void) | null>(null);
 
     const currentLine = lines[currentIndex];

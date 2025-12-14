@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Mock Data Interfaces
 
 interface Post {

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { GameIcons } from '@/components/ui/GameIcons';
 
 interface SettingsPageProps {

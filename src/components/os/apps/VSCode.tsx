@@ -94,7 +94,7 @@ export const VSCode = () => {
     const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
     // Game state tracking
-    const { setFlag, addDiscoveredClue, flags } = useGameStore();
+    const { setFlag, flags } = useGameStore();
 
     // Check for mobile layout size
     useEffect(() => {
