@@ -25,7 +25,7 @@ export const FileExplorer = ({ initialPath = 'desktop' }: FileExplorerProps) => 
                 openWindow('pdf', file.name, { fileId: file.id });
             } else if (['doc', 'docx', 'excel', 'xlsx'].includes(file.fileType || '')) {
                 openWindow('office', file.name, { fileId: file.id });
-            } else if (['png', 'jpg', 'jpeg', 'gif'].includes(file.fileType || '')) {
+            } else if (file.fileType === 'image' || ['png', 'jpg', 'jpeg', 'gif'].includes(file.fileType || '')) {
                 openWindow('image', file.name, { fileId: file.id });
             }
         }
@@ -48,6 +48,7 @@ export const FileExplorer = ({ initialPath = 'desktop' }: FileExplorerProps) => 
             case 'docx': return <Icons.Word className="w-full h-full filter drop-shadow-sm" />;
             case 'excel':
             case 'xlsx': return <Icons.Excel className="w-full h-full filter drop-shadow-sm" />;
+            case 'image':
             case 'png':
             case 'jpg':
             case 'jpeg': return <Icons.Image className="w-full h-full filter drop-shadow-sm" />;
